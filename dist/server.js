@@ -17,10 +17,12 @@ const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = __importDefault(require("./config"));
 const user_routes_1 = __importDefault(require("./modules/user/user.routes"));
+const mango_routes_1 = __importDefault(require("./modules/mango/mango.routes"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(user_routes_1.default);
+app.use(mango_routes_1.default);
 app.listen(config_1.default.PORT, () => {
     console.log(`Mango server is running on port ${config_1.default.PORT}`);
 });

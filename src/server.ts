@@ -3,12 +3,14 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import config from './config';
 import userRoutes from './modules/user/user.routes';
+import mangoRoutes from './modules/mango/mango.routes';
 
 const app = express();
 
 app.use(cors())
 app.use(express.json());
 app.use(userRoutes);
+app.use(mangoRoutes);
 
 app.listen(config.PORT, () => {
     console.log(`Mango server is running on port ${ config.PORT }`);
