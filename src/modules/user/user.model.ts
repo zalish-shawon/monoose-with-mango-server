@@ -42,6 +42,7 @@ const userSchema = new Schema<IUser>({
         type: String,
         enum: ["Admin", "Customer"],
         default: "Customer",
+        required: true,
     },
 }, {
     timestamps: true,

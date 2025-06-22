@@ -11,3 +11,12 @@ export const registerUser = async(req: Request, res: Response) => {
         data: user,
     });
 };
+export const getUser = async(req: Request, res: Response) => {
+    
+    const user = await User.find();
+    res.status(201).json({
+        success: true,
+        message: "All users read successfully",
+        data: user,
+    });
+};
