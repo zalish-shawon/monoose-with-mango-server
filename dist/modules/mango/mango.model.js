@@ -24,7 +24,7 @@ const mangoSchema = new mongoose_1.Schema({
     },
     session: {
         type: String,
-        enum: ["summer", "winter"],
+        enum: ["Summer", "Winter"],
         required: true,
     },
 }, {

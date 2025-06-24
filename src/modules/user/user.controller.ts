@@ -11,6 +11,7 @@ export const registerUser = async(req: Request, res: Response) => {
         data: user,
     });
 };
+
 export const getUser = async(req: Request, res: Response) => {
     
     const user = await User.find();

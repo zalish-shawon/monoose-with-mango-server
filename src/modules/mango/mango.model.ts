@@ -24,7 +24,7 @@ const mangoSchema = new Schema<IMango>({
     },
     session: {
         type: String,
-        enum: ["summer", "winter"],
+        enum: ["Summer", "Winter"],
         required: true,
     },
 }, {
