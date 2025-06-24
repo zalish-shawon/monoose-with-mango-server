@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUser = exports.registerUser = void 0;
+exports.deleteUser = exports.updateUser = exports.getSingleUser = exports.getUser = exports.registerUser = void 0;
 const user_model_1 = __importDefault(require("./user.model"));
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const payload = req.body;
@@ -34,3 +34,62 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 exports.getUser = getUser;
+const getSingleUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const user = yield user_model_1.default.findById(id);
+        if (!user) {
+            res.status(404).json({ success: false, message: "User not found" });
+            return;
+        }
+        res.json({ success: true, data: user });
+    }
+    catch (error) {
+        res
+            .status(500)
+            .json({ success: false, message: "Error fetching user", error });
+    }
+});
+exports.getSingleUser = getSingleUser;
+const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const updated = yield user_model_1.default.findByIdAndUpdate(id, req.body, { new: true });
+        if (!updated) {
+            res.status(404).json({ success: false, message: "User not found" });
+            return;
+        }
+        res.json({
+            success: true,
+            message: "User updated successfully",
+            data: updated,
+        });
+    }
+    catch (error) {
+        res
+            .status(500)
+            .json({ success: false, message: "Error updating user", error });
+    }
+});
+exports.updateUser = updateUser;
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const deleted = yield user_model_1.default.findByIdAndDelete(id);
+        if (!deleted) {
+            res.status(404).json({ success: false, message: "User not found" });
+            return;
+        }
+        res.json({
+            success: true,
+            message: "User deleted successfully",
+            data: deleted,
+        });
+    }
+    catch (error) {
+        res
+            .status(500)
+            .json({ success: false, message: "Error deleting user", error });
+    }
+});
+exports.deleteUser = deleteUser;
