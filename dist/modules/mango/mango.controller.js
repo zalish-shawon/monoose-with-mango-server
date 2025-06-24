@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addMango = void 0;
+exports.getSingleMango = exports.deleteMango = exports.updateMango = exports.addMango = void 0;
 const mango_model_1 = __importDefault(require("./mango.model"));
 const addMango = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const payload = req.body;
@@ -20,8 +20,51 @@ const addMango = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     yield mango.save();
     res.status(201).json({
         success: true,
-        message: "Mango added successfully",
+        message: `${mango.name} Mango added successfully`,
         data: mango,
     });
+    console.log(mango);
 });
 exports.addMango = addMango;
+const updateMango = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const updated = yield mango_model_1.default.findByIdAndUpdate(id, req.body, { new: true });
+        if (!updated) {
+            return res.status(404).json({ success: false, message: "Mango not found" });
+        }
+        res.json({ success: true, message: "Mango updated successfully", data: updated });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, message: "Error updating mango", error });
+    }
+});
+exports.updateMango = updateMango;
+const deleteMango = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const deleted = yield mango_model_1.default.findByIdAndDelete(id);
+        if (!deleted) {
+            return res.status(404).json({ success: false, message: "Mango not found" });
+        }
+        res.json({ success: true, message: "Mango deleted successfully", data: deleted });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, message: "Error deleting mango", error });
+    }
+});
+exports.deleteMango = deleteMango;
+const getSingleMango = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const mango = yield mango_model_1.default.findById(id);
+        if (!mango) {
+            return res.status(404).json({ success: false, message: "Mango not found" });
+        }
+        res.json({ success: true, data: mango });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, message: "Error fetching mango", error });
+    }
+});
+exports.getSingleMango = getSingleMango;

@@ -29,6 +29,7 @@ const mangoSchema = new mongoose_1.Schema({
     },
 }, {
     timestamps: true,
+    versionKey: false,
 });
 const Mango = (0, mongoose_1.model)("Mango", mangoSchema);
 exports.default = Mango;
