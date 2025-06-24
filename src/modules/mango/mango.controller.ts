@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
 import Mango from "./mango.model";
 
-export const addMango = async (req: Request, res: Response) => {
+export const addMango: RequestHandler = async (req, res) => {
     const payload = req.body;
     const mango = new Mango(payload);
     await mango.save();
@@ -13,12 +13,13 @@ export const addMango = async (req: Request, res: Response) => {
     console.log(mango);
 };
 
-export const updateMango = async (req: Request, res: Response) => {
+export const updateMango: RequestHandler = async (req, res) => {
     try {
         const { id } = req.params;
         const updated = await Mango.findByIdAndUpdate(id, req.body, { new: true });
         if (!updated) {
-            return res.status(404).json({ success: false, message: "Mango not found" });
+            res.status(404).json({ success: false, message: "Mango not found" });
+            return;
         }
         res.json({ success: true, message: "Mango updated successfully", data: updated });
     } catch (error) {
@@ -26,12 +27,13 @@ export const updateMango = async (req: Request, res: Response) => {
     }
 };
 
-export const deleteMango = async (req: Request, res: Response) => {
+export const deleteMango: RequestHandler = async (req, res) => {
     try {
         const { id } = req.params;
         const deleted = await Mango.findByIdAndDelete(id);
         if (!deleted) {
-            return res.status(404).json({ success: false, message: "Mango not found" });
+            res.status(404).json({ success: false, message: "Mango not found" });
+            return;
         }
         res.json({ success: true, message: "Mango deleted successfully", data: deleted });
     } catch (error) {
@@ -39,15 +41,19 @@ export const deleteMango = async (req: Request, res: Response) => {
     }
 };
 
-export const getSingleMango = async (req: Request, res: Response) => {
+export const getSingleMango: RequestHandler = async (req, res) => {
     try {
         const { id } = req.params;
         const mango = await Mango.findById(id);
         if (!mango) {
-            return res.status(404).json({ success: false, message: "Mango not found" });
+            res.status(404).json({ success: false, message: "Mango not found" });
+            return;
         }
         res.json({ success: true, data: mango });
     } catch (error) {
         res.status(500).json({ success: false, message: "Error fetching mango", error });
     }
 };
+
+
+

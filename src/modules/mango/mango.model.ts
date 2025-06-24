@@ -29,7 +29,7 @@ const mangoSchema = new Schema<IMango>({
     },
 }, {
     timestamps: true,
-    versionKey: false,
+    
 })
 
 const Mango = model<IMango>("Mango", mangoSchema);

@@ -31,7 +31,8 @@ const updateMango = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const { id } = req.params;
         const updated = yield mango_model_1.default.findByIdAndUpdate(id, req.body, { new: true });
         if (!updated) {
-            return res.status(404).json({ success: false, message: "Mango not found" });
+            res.status(404).json({ success: false, message: "Mango not found" });
+            return;
         }
         res.json({ success: true, message: "Mango updated successfully", data: updated });
     }
@@ -45,7 +46,8 @@ const deleteMango = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const { id } = req.params;
         const deleted = yield mango_model_1.default.findByIdAndDelete(id);
         if (!deleted) {
-            return res.status(404).json({ success: false, message: "Mango not found" });
+            res.status(404).json({ success: false, message: "Mango not found" });
+            return;
         }
         res.json({ success: true, message: "Mango deleted successfully", data: deleted });
     }
@@ -59,7 +61,8 @@ const getSingleMango = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const { id } = req.params;
         const mango = yield mango_model_1.default.findById(id);
         if (!mango) {
-            return res.status(404).json({ success: false, message: "Mango not found" });
+            res.status(404).json({ success: false, message: "Mango not found" });
+            return;
         }
         res.json({ success: true, data: mango });
     }
